@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Host Details</title>
+</head>
+<body>
+    <h1>Host Details: {{ host_obj.host_name }}</h1>
+    <ul>
+        <li>ID: {{ host_obj.host_id }}</li>
+        <li>Cluster: {{ host_obj.parent_cluster.cluster_name }}</li>
+        <li>IP: {{ host_obj.host_ip }}</li>
+        <li>Server Model: {{ host_obj.host_server_model }}</li>
+        <li>ESXi Info: {{ host_obj.esx_info }}</li>
+    </ul>
+    <a href="/">Back to Vcenters</a>
+</body>
+</html>

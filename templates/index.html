@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vcenters Information</title>
+</head>
+<body>
+    <h1>Vcenters</h1>
+    <ul>
+        {% for vcenter_name, vcenter_obj in vcenters_dict.items() %}
+            <li>Vcenter: {{ vcenter_name }}
+                <ul>
+                    {% for dc_id, dc_obj in vcenter_obj.datacenters.items() %}
+                        <li>Datacenter: {{ dc_obj.datacenter_name }}
+                            <ul>
+                                {% for cluster_id, cluster_obj in vcenter_obj.clusters.items() %}
+                                    {% if cluster_obj.parent_datacenter.datacenter_id == dc_id %}
+                                        <li>Cluster: {{ cluster_obj.cluster_name }}
+                                            <ul>
+                                                {% for host_id, host_obj in vcenter_obj.hosts.items() %}
+                                                    {% if host_obj.parent_cluster.cluster_id == cluster_id %}
+                                                        <li><a href="/host/{{ vcenter_name }}/{{ host_id }}">Host: {{ host_obj.host_name }}</a></li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Search Form -->
+    <form action="/" method="post">
+        <input type="text" name="search" placeholder="Search...">
+        <input type="submit" value="Search">
+    </form>
+
+    <!-- Display Search Results -->
+    {% if search_results %}
+        <h2>Search Results:</h2>
+        <ul>
+            {% for result in search_results %}
+                <li>{{ result }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
+
