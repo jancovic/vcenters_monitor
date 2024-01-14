@@ -39,7 +39,8 @@ class Hosts:
         self.parent_cluster = parent_cluster
         self.host_ip = host_ip
         self.host_server_model = host_server_model
-        self.esx_info = f"Version: {esx_version}, Build: {esx_build}"
+        self.esx_version = esx_version
+        self.esx_build = esx_build
 
     def __str__(self):
         return f"Host Name: {self.host_name}, Host ID: {self.host_id}, Parent Cluster: {self.parent_cluster.cluster_name}, IP: {self.host_ip}, Server Model: {self.host_server_model}, ESXi Version: {self.esx_version}, ESXi Build: {self.esx_build}"
@@ -71,9 +72,8 @@ def print_topology(content, vcenter_name):
                         # Fetch IP, server model, ESXi version, and build
                         host_ip = host.summary.managementServerIp
                         host_server_model = host.hardware.systemInfo.model
-                        esx_version = host.config.product.version
+                        esx_version = host.config.product.fullName
                         esx_build = host.config.product.build
-
                         host_obj = Hosts(host_name, host_id, cluster_obj, host_ip, host_server_model, esx_version, esx_build)
                         vcenter_obj.hosts[host_id] = host_obj
 
@@ -122,6 +122,5 @@ def host_detail(vcenter_name, host_id):
 
 
 if __name__ == "__main__":
-#   app.run(debug=True)
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True)
 
