@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>List of vCenter Servers</h1>
+
+    <ul>
+        {% for vcenter in vcenters %}
+            <li>{{ vcenter.vcenter_name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

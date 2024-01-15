@@ -6,7 +6,7 @@ from pyVim.connect import SmartConnect, Disconnect
 from pyVmomi import vim
 
 app = Flask(__name__)
-
+app.debug = True
 
 app.static_folder = 'static'
 
@@ -63,6 +63,8 @@ def print_topology(content, vcenter_name):
     vcenter_obj = Vcenters(vcenter_name)
     vcenters_dict[vcenter_name] = vcenter_obj
 
+    print(f"Processing vCenter: {vcenter_name}")
+
     for datacenter in content.rootFolder.childEntity:
         if isinstance(datacenter, vim.Datacenter):
             datacenter_id = datacenter._moId
@@ -103,6 +105,10 @@ def print_topology(content, vcenter_name):
 
                         host_obj = Hosts(host_name, host_id, cluster_obj, host_ip, host_server_model, esx_version, esx_build, host_cpu, host_total_memory, serial_number, host_memory_usage, host_free_memory, connection_state, host_power_state, host_bios_version)
                         vcenter_obj.hosts[host_id] = host_obj
+
+    print(f"Datacenters: {vcenter_obj.datacenters}")
+    print(f"Clusters: {vcenter_obj.clusters}")
+    print(f"Hosts: {vcenter_obj.hosts}")                        
 
 # Load vCenter credentials from a YAML file
 with open("vcenters.yaml", 'r') as file:
@@ -154,6 +160,9 @@ def search_all(criteria):
     return list(results)
         
 
+
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -171,6 +180,13 @@ def hosts():
         for _, host_obj in vcenter_obj.hosts.items():
             all_hosts.append((vcenter_name, host_obj))
     return render_template('hosts.html', hosts=all_hosts)
+
+
+@app.route('/vcenters')
+def vcenters():
+    print("Accessing /vcenters route")
+    all_vcenters = list(vcenters_dict.values())
+    return render_template('vcenters.html', vcenters=all_vcenters)
 
 
 @app.route('/host/<vcenter_name>/<host_id>')
