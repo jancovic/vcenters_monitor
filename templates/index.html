@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Vcenters Information</title>
-</head>
-<body>
-    <h1>Vcenters</h1>
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Vcenter Dashboard</h1>
+
     <ul>
         {% for vcenter_name, vcenter_obj in vcenters_dict.items() %}
             <li>Vcenter: {{ vcenter_name }}
@@ -48,6 +46,7 @@
             {% endfor %}
         </ul>
     {% endif %}
-</body>
-</html>
+
+    <!-- Your content here -->
+{% endblock %}
 
