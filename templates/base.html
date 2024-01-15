@@ -4,7 +4,10 @@
     <title>Flask App</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
     <style>
+        
         /* Custom CSS for the Vertical Navbar */
         .vertical-nav {
             min-width: 250px;

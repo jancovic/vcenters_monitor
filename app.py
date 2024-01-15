@@ -7,6 +7,9 @@ from pyVmomi import vim
 
 app = Flask(__name__)
 
+
+app.static_folder = 'static'
+
 # Class definitions with parent references
 class Vcenters:
     def __init__(self, vcenter_name):
