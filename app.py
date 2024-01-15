@@ -33,7 +33,7 @@ class Clusters:
         return f"Cluster ID: {self.cluster_id}, Cluster Name: {self.cluster_name}, Parent Datacenter: {self.parent_datacenter.datacenter_name}"
 
 class Hosts:
-    def __init__(self, host_name, host_id, parent_cluster, host_ip, host_server_model, esx_version, esx_build, host_cpu, host_total_memory, serial_number, host_memory_usage, host_free_memory):
+    def __init__(self, host_name, host_id, parent_cluster, host_ip, host_server_model, esx_version, esx_build, host_cpu, host_total_memory, serial_number, host_memory_usage, host_free_memory, connection_state):
         self.host_name = host_name
         self.host_id = host_id
         self.parent_cluster = parent_cluster
@@ -46,6 +46,7 @@ class Hosts:
         self.host_total_memory = host_total_memory
         self.host_memory_usage = host_memory_usage
         self.host_free_memory = host_free_memory
+        self.connection_state = connection_state
 
     def __str__(self):
         return f"Host Name: {self.host_name}, Host ID: {self.host_id}, Parent Cluster: {self.parent_cluster.cluster_name}, IP: {self.host_ip}, Server Model: {self.host_server_model}, ESXi Version: {self.esx_version}, ESXi Build: {self.esx_build}, Host CPU: {self.host_cpu}, Host Memory: {self.host_total_memory}, Serial Number: {self.serial_number}"
@@ -90,8 +91,10 @@ def print_topology(content, vcenter_name):
                         host_total_memory = round(host_summary.hardware.memorySize / (1024 ** 3))
                         host_memory_usage = round (host.summary.quickStats.overallMemoryUsage / 1024)
                         host_free_memory = host_total_memory - host_memory_usage
+                        # connection_state = host_summary.runtime.connectionState
+                        connection_state = host.summary.runtime.connectionState
 
-                        host_obj = Hosts(host_name, host_id, cluster_obj, host_ip, host_server_model, esx_version, esx_build, host_cpu, host_total_memory, serial_number, host_memory_usage, host_free_memory)
+                        host_obj = Hosts(host_name, host_id, cluster_obj, host_ip, host_server_model, esx_version, esx_build, host_cpu, host_total_memory, serial_number, host_memory_usage, host_free_memory, connection_state)
                         vcenter_obj.hosts[host_id] = host_obj
 
 # Load vCenter credentials from a YAML file
