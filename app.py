@@ -124,6 +124,32 @@ for vcenter in vcenters:
         print(f"Failed to connect to {vcenter_server}: {e}")
 
 # Function to print topology and search functionality remains the same
+        
+
+def search_all(criteria):
+    results = set()
+
+    # Convert criteria to lowercase for case-insensitive comparison
+    criteria_lower = criteria.lower()
+
+    for vc_name, vcenter_obj in vcenters_dict.items():
+        if criteria_lower in vc_name.lower():
+            results.add(f"vCenter: {vc_name}")
+
+        for dc_id, dc_obj in vcenter_obj.datacenters.items():
+            if criteria_lower in dc_obj.datacenter_name.lower():
+                results.add(f"Datacenter: {dc_obj.datacenter_name}")
+
+            for cl_id, cl_obj in vcenter_obj.clusters.items():
+                if criteria_lower in cl_obj.cluster_name.lower():
+                    results.add(f"Cluster: {cl_obj.cluster_name}")
+
+                for host_id, host_obj in vcenter_obj.hosts.items():
+                    if criteria_lower in host_obj.host_name.lower():
+                        results.add(f"Host: {host_obj.host_name}")
+
+    return list(results)
+        
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
