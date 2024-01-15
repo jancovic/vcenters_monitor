@@ -33,7 +33,7 @@ class Clusters:
         return f"Cluster ID: {self.cluster_id}, Cluster Name: {self.cluster_name}, Parent Datacenter: {self.parent_datacenter.datacenter_name}"
 
 class Hosts:
-    def __init__(self, host_name, host_id, parent_cluster, host_ip, host_server_model, esx_version, esx_build, host_cpu, host_memory):
+    def __init__(self, host_name, host_id, parent_cluster, host_ip, host_server_model, esx_version, esx_build, host_cpu, host_memory, serial_number):
         self.host_name = host_name
         self.host_id = host_id
         self.parent_cluster = parent_cluster
@@ -41,11 +41,12 @@ class Hosts:
         self.host_server_model = host_server_model
         self.esx_version = esx_version
         self.esx_build = esx_build
+        self.serial_number = serial_number
         self.host_cpu = host_cpu
         self.host_memory = host_memory
 
     def __str__(self):
-        return f"Host Name: {self.host_name}, Host ID: {self.host_id}, Parent Cluster: {self.parent_cluster.cluster_name}, IP: {self.host_ip}, Server Model: {self.host_server_model}, ESXi Version: {self.esx_version}, ESXi Build: {self.esx_build}, Host CPU: {self.host_cpu}, Host Memory: {self.host_memory}"
+        return f"Host Name: {self.host_name}, Host ID: {self.host_id}, Parent Cluster: {self.parent_cluster.cluster_name}, IP: {self.host_ip}, Server Model: {self.host_server_model}, ESXi Version: {self.esx_version}, ESXi Build: {self.esx_build}, Host CPU: {self.host_cpu}, Host Memory: {self.host_memory}, Serial Number: {self.serial_number}"
 
 # Dictionary to store Vcenter objects
 vcenters_dict = {}
@@ -73,12 +74,17 @@ def print_topology(content, vcenter_name):
 
                         # Fetch IP, server model, ESXi version, and build
                         host_ip = host.summary.managementServerIp
-                        host_server_model = host.hardware.systemInfo.model
+                        
                         esx_version = host.config.product.fullName
                         esx_build = host.config.product.build
+
+                        hardware_info = host.hardware.systemInfo
+                        host_server_model = hardware_info.model
+                        serial_number = hardware_info.serialNumber
+
                         host_cpu = host.hardware.cpuInfo.numCpuCores
                         host_memory = round(host.hardware.memorySize / (1024 ** 3))
-                        host_obj = Hosts(host_name, host_id, cluster_obj, host_ip, host_server_model, esx_version, esx_build, host_cpu, host_memory)
+                        host_obj = Hosts(host_name, host_id, cluster_obj, host_ip, host_server_model, esx_version, esx_build, host_cpu, host_memory, serial_number)
                         vcenter_obj.hosts[host_id] = host_obj
 
 # Load vCenter credentials from a YAML file
