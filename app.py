@@ -10,6 +10,9 @@ app.debug = True
 
 app.static_folder = 'static'
 
+
+test = "hello"
+
 # Class definitions with parent references
 class Vcenters:
     def __init__(self, vcenter_name):

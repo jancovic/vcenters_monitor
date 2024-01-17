@@ -1,30 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-
-        <h3>Host Details: {{ host_obj.host_name }}</h3>
-        <ul>
-            <li>ID: {{ host_obj.host_id }}</li>
-            <li>Hostname: {{ host_obj.host_name }}</li>
-            <li>Cluster: {{ host_obj.parent_cluster.cluster_name }}</li>
-            <li>IP: {{ host_obj.host_ip }}</li>
-            <li>Server Model: {{ host_obj.host_server_model }}</li>
-            <li>Serial Number: {{ host_obj.serial_number }}</li>
-            <li>Host CPU: {{ host_obj.host_cpu }}</li>
-            <li>Host Total Memory: {{ host_obj.host_total_memory }}</li>
-            <li>Host Used Memory: {{ host_obj.host_memory_usage }}</li>
-            <li>Host Free Memory: {{ host_obj.host_free_memory }}</li>
-            <li>Host Connection State: {{ host_obj.connection_state }}</li>
-            <li>Host Power State: {{ host_obj.host_power_state }}</li>
-            <li>ESXi Version: {{ host_obj.esx_version }}</li>
-            <li>ESXi Build: {{ host_obj.esx_build }}</li>
-            <li>ESX Host BIOS Version: {{ host_obj.host_bios_version }}</li>
-        </ul>
-        <a href="/">Back to Vcenters</a>
-
-    
-    <!-- Your content here -->
+<div class="container">
+    <h3>Host Details: {{ host_obj.host_name }}</h3>
+    <ul class="list-unstyled">
+        <li><strong>ID:</strong> {{ host_obj.host_id }}</li>
+        <li><strong>Hostname:</strong> {{ host_obj.host_name }}</li>
+        <li><strong>Cluster:</strong> {{ host_obj.parent_cluster.cluster_name }}</li>
+        <li><strong>IP:</strong> {{ host_obj.host_ip }}</li>
+        <li><strong>Server Model:</strong> {{ host_obj.host_server_model }}</li>
+        <li><strong>Serial Number:</strong> {{ host_obj.serial_number }}</li>
+        <li><strong>Host CPU:</strong> {{ host_obj.host_cpu }}</li>
+        <li><strong>Host Total Memory:</strong> {{ host_obj.host_total_memory }}</li>
+        <li><strong>Host Used Memory:</strong> {{ host_obj.host_memory_usage }}</li>
+        <li><strong>Host Free Memory:</strong> {{ host_obj.host_free_memory }}</li>
+        <li><strong>Host Connection State:</strong> {{ host_obj.connection_state }}</li>
+        <li><strong>Host Power State:</strong> {{ host_obj.host_power_state }}</li>
+        <li><strong>ESXi Version:</strong> {{ host_obj.esx_version }}</li>
+        <li><strong>ESXi Build:</strong> {{ host_obj.esx_build }}</li>
+        <li><strong>ESX Host BIOS Version:</strong> {{ host_obj.host_bios_version }}</li>
+    </ul>
+    <a href="/">Back to Vcenters</a>
+</div>
+<!-- Your content here -->
 {% endblock %}
-
-
