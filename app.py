@@ -176,13 +176,27 @@ def index():
     return render_template('index.html', vcenters_dict=vcenters_dict)
 
 
+# @app.route('/hosts')
+# def hosts():
+#     all_hosts = []
+#     for vcenter_name, vcenter_obj in vcenters_dict.items():
+#         for _, host_obj in vcenter_obj.hosts.items():
+#             all_hosts.append((vcenter_name, host_obj))
+#     return render_template('hosts.html', hosts=all_hosts)
+
 @app.route('/hosts')
 def hosts():
     all_hosts = []
+    # Iterate through each vCenter and its hosts
     for vcenter_name, vcenter_obj in vcenters_dict.items():
-        for _, host_obj in vcenter_obj.hosts.items():
+        for host_id, host_obj in vcenter_obj.hosts.items():
+            # You can add more host details here if needed
             all_hosts.append((vcenter_name, host_obj))
+
+    # Render the hosts information in a template
     return render_template('hosts.html', hosts=all_hosts)
+
+
 
 
 @app.route('/vcenters')
