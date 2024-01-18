@@ -36,7 +36,8 @@
                                                 <ul>
                                                     {% for host_id, host_obj in vcenter_obj.hosts.items() %}
                                                         {% if host_obj.parent_cluster.cluster_id == cluster_id %}
-                                                            <li><a href="/host/{{ vcenter_name }}/{{ host_id }}">Host: {{ host_obj.host_name }}</a></li>
+                                                            <!-- <li><a href="/host/{{ vcenter_name }}/{{ host_id }}">Host: {{ host_obj.host_name }}</a></li> -->
+                                                            <li>Host: <a href="/host/{{ vcenter_name }}/{{ host_id }}">{{ host_obj.host_name }}</a></li>
                                                         {% endif %}
                                                     {% endfor %}
                                                 </ul>

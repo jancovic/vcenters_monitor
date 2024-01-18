@@ -2,10 +2,32 @@
 
 {% block content %}
     <h2>All Hosts</h2>
-    <ul>
-        {% for vcenter_name, host in hosts %}
-        <!-- <li>{{ vcenter_name }} - {{ host.host_name }}</li> -->
-        <li>{{ host.host_name }}</li>
-        {% endfor %}
-    </ul>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Host Name</th>
+                    <th>vCenter Name</th>
+                    <th>IP Address</th>
+                    <th>ESX Server Model</th>
+                    <th>ESXi Version</th>
+                    <th>CPU Cores</th>
+                    <th>Total Memory (GB)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vcenter_name, host in hosts %}
+                    <tr>
+                        <td>{{ host.host_name }}</td>
+                        <td>{{ vcenter_name }}</td>
+                        <td>{{ host.host_ip }}</td>
+                        <td>{{ host.host_server_model }}</td>
+                        <td>{{ host.esx_version }}</td>
+                        <td>{{ host.host_cpu }}</td>
+                        <td>{{ host.host_total_memory }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
