@@ -14,6 +14,7 @@
                     <th>CPU Cores</th>
                     <th>Total Memory (GB)</th>
                     <th>Serial Number</th>
+                    <th>BIOS version</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +28,7 @@
                         <td>{{ host.host_cpu }}</td>
                         <td>{{ host.host_total_memory }}</td>
                         <td>{{ host.serial_number }}
+                        <td>{{ host.host_bios_version }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
