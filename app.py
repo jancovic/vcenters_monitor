@@ -86,7 +86,14 @@ def print_topology(content, vcenter_name):
                         host_name = host.name
 
                         # Fetch IP, server model, ESXi version, and build
-                        host_ip = host.summary.managementServerIp
+                        # host_ip = host.summary.managementServerIp
+
+                        host_ip = None
+                        for vnic in host.config.network.vnic:
+                            if vnic.spec.ip.ipAddress:
+                                host_ip = vnic.spec.ip.ipAddress
+                                break  # Assuming the first IP is the management IP
+
                         
                         esx_version = host.config.product.fullName
                         esx_build = host.config.product.build

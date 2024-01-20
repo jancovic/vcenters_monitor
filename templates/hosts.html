@@ -13,6 +13,7 @@
                     <th>ESXi Version</th>
                     <th>CPU Cores</th>
                     <th>Total Memory (GB)</th>
+                    <th>Serial Number</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +26,7 @@
                         <td>{{ host.esx_version }}</td>
                         <td>{{ host.host_cpu }}</td>
                         <td>{{ host.host_total_memory }}</td>
+                        <td>{{ host.serial_number }}
                     </tr>
                 {% endfor %}
             </tbody>
