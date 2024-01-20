@@ -4,6 +4,7 @@ import atexit
 import yaml
 from pyVim.connect import SmartConnect, Disconnect
 from pyVmomi import vim
+from datetime import datetime
 
 app = Flask(__name__)
 app.debug = True
@@ -108,10 +109,22 @@ def print_topology(content, vcenter_name):
                         host_total_memory = round(host_summary.hardware.memorySize / (1024 ** 3))
                         host_memory_usage = round (host.summary.quickStats.overallMemoryUsage / 1024)
                         host_free_memory = host_total_memory - host_memory_usage
-                        # connection_state = host_summary.runtime.connectionState
                         connection_state = host.summary.runtime.connectionState
                         host_power_state = host.summary.runtime.powerState
-                        host_bios_version = host.hardware.biosInfo.releaseDate
+
+
+
+                        bios_version_to_str = host.hardware.biosInfo.releaseDate
+
+                        bios_version = str(bios_version_to_str)
+
+                        # Convert the release date to a datetime object
+                        date_time_obj = datetime.fromisoformat(bios_version)
+                        # Format the date in the desired format (YYYY-MM-DD)
+                        formatted_bios_release_date = date_time_obj.strftime("%Y-%m-%d")
+                        # Now formatted_bios_release_date contains the date in the format YYYY-MM-DD
+                        host_bios_version = formatted_bios_release_date
+
 
                         host_obj = Hosts(host_name, host_id, cluster_obj, host_ip, host_server_model, esx_version, esx_build, host_cpu, host_total_memory, serial_number, host_memory_usage, host_free_memory, connection_state, host_power_state, host_bios_version)
                         vcenter_obj.hosts[host_id] = host_obj
