@@ -16,11 +16,12 @@ test = "hello"
 
 # Class definitions with parent references
 class Vcenters:
-    def __init__(self, vcenter_name):
+    def __init__(self, vcenter_name, version_build=None):
         self.vcenter_name = vcenter_name
         self.datacenters = {}
         self.clusters = {}
         self.hosts = {}
+        self.version_build = version_build
 
 class Datacenters:
     def __init__(self, datacenter_id, datacenter_name):
@@ -64,7 +65,9 @@ class Hosts:
 vcenters_dict = {}
 
 def print_topology(content, vcenter_name):
-    vcenter_obj = Vcenters(vcenter_name)
+    about_info = content.about
+    vcenter_version_build = f"{about_info.version} build-{about_info.build}"
+    vcenter_obj = Vcenters(vcenter_name, version_build=vcenter_version_build)
     vcenters_dict[vcenter_name] = vcenter_obj
 
     print(f"Processing vCenter: {vcenter_name}")

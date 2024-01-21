@@ -5,7 +5,7 @@
 
     <ul>
         {% for vcenter in vcenters %}
-            <li>{{ vcenter.vcenter_name }}</li>
+            <li>{{ vcenter.vcenter_name }} Version and Build: {{vcenter.version_build}}</li>
         {% endfor %}
     </ul>
 {% endblock %}
