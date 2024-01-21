@@ -3,9 +3,20 @@
 {% block content %}
     <h1>List of vCenter Servers</h1>
 
-    <ul>
-        {% for vcenter in vcenters %}
-            <li>{{ vcenter.vcenter_name }} Version and Build: {{vcenter.version_build}}</li>
-        {% endfor %}
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>VCenter Name</th>
+                <th>Version and Build</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vcenter in vcenters %}
+                <tr>
+                    <td>{{ vcenter.vcenter_name }}</td>
+                    <td>{{ vcenter.version_build }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
