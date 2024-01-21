@@ -7,9 +7,9 @@
             <thead>
                 <tr>
                     <th>Host Name</th>
-                    <th>vCenter Name</th>
-                    <th>IP Address</th>
-                    <th>ESX Server Model</th>
+<!--                    <th>vCenter Name</th>-->
+<!--                    <th>IP Address</th>-->
+                    <th>Server Model</th>
                     <th>ESXi Version</th>
                     <th>CPU Cores</th>
                     <th>Total Memory (GB)</th>
@@ -21,8 +21,8 @@
                 {% for vcenter_name, host in hosts %}
                     <tr>
                         <td>{{ host.host_name }}</td>
-                        <td>{{ vcenter_name }}</td>
-                        <td>{{ host.host_ip }}</td>
+<!--                        <td>{{ vcenter_name }}</td>-->
+<!--                        <td>{{ host.host_ip }}</td>-->
                         <td>{{ host.host_server_model }}</td>
                         <td>{{ host.esx_version }}</td>
                         <td>{{ host.host_cpu }}</td>
