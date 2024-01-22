@@ -6,30 +6,25 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Host Name</th>
-<!--                    <th>vCenter Name</th>-->
-<!--                    <th>IP Address</th>-->
-                    <th>Server Model</th>
-                    <th>ESXi Version</th>
-                    <th>CPU Cores</th>
-                    <th>Total Memory (GB)</th>
-                    <th>Serial Number</th>
-                    <th>BIOS version</th>
+                    <!-- Update these headers with sort links -->
+                    <th><a href="?sort=host_name&direction=asc">Host Name &#x25B2;</a> / <a href="?sort=host_name&direction=desc"> &#x25BC;</a></th>
+                    <th><a href="?sort=server_model&direction=asc">Server Model &#x25B2;</a> / <a href="?sort=server_model&direction=desc"> &#x25BC;</a></th>
+                    <th><a href="?sort=esx_version&direction=asc">ESXi Version &#x25B2;</a> / <a href="?sort=esx_version&direction=desc"> &#x25BC;</a></th>
+                    <th><a href="?sort=cpu_cores&direction=asc">CPU Cores &#x25B2;</a> / <a href="?sort=cpu_cores&direction=desc"> &#x25BC;</a></th>
+                    <th><a href="?sort=total_memory&direction=asc">Total Memory (GB) &#x25B2;</a> / <a href="?sort=total_memory&direction=desc"> &#x25BC;</a></th>
+                    <th><a href="?sort=serial_number&direction=asc">Serial Number &#x25B2;</a> / <a href="?sort=serial_number&direction=desc"> &#x25BC;</a></th>
+                    <th><a href="?sort=bios_version&direction=asc">BIOS Version &#x25B2;</a> / <a href="?sort=bios_version&direction=desc"> &#x25BC;</a></th>
                 </tr>
             </thead>
             <tbody>
                 {% for vcenter_name, host in hosts %}
                     <tr>
-<!--                        <td>{{ host.host_name }}</td>-->
-<!--                        <td><a href="{{ url_for('host_detail', vcenter_name=vcenter_name, host_id=host.host_id) }}">{{ host.host_name }}</a></td>-->
-                        <td><a href="{{ url_for('host_detail', vcenter_name=vcenter_name, host_id=host.host_id) }}" style="color: black;">{{ host.host_name }}</a></td>
-<!--                        <td>{{ vcenter_name }}</td>-->
-<!--                        <td>{{ host.host_ip }}</td>-->
+                        <td>{{ host.host_name }}</td>
                         <td>{{ host.host_server_model }}</td>
                         <td>{{ host.esx_version }}</td>
                         <td>{{ host.host_cpu }}</td>
                         <td>{{ host.host_total_memory }}</td>
-                        <td>{{ host.serial_number }}
+                        <td>{{ host.serial_number }}</td>
                         <td>{{ host.host_bios_version }}</td>
                     </tr>
                 {% endfor %}
