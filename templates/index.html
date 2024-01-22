@@ -5,13 +5,16 @@
 
     <div class="content-container">
 
-        <!-- Search Form -->
-        <form action="/" method="post" class="space-between">
-            <input type="text" name="search" placeholder="Search...">
-            <input type="submit" value="Search">
-        </form>
-
-    </div>
+        <!-- Search Form within Bootstrap Grid System -->
+        <div class="row">
+<!--            <div class="col-lg-8 col-md-10">-->
+            <div class="col-12 mb-4">
+                <form action="/" method="post" class="form-inline">
+                    <input type="text" name="search" class="form-control w-75" placeholder="Search...">
+                    <input type="submit" value="Search" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
     
     <!-- Display Search Results -->
     {% if search_results %}

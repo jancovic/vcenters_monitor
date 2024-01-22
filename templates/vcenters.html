@@ -1,9 +1,34 @@
 {% extends "base.html" %}
 
+{% block head %}
+<style>
+    .vcenter-table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    .vcenter-table th, .vcenter-table td {
+        padding-left: 2px; /* Reduced horizontal padding */
+        padding-right: 2px; /* Reduced horizontal padding */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .vcenter-table th:nth-child(1), .vcenter-table td:nth-child(1) {
+        width: 30%; /* Adjust as needed */
+    }
+
+    .vcenter-table th:nth-child(2), .vcenter-table td:nth-child(2) {
+        width: 70%; /* Adjust as needed */
+    }
+</style>
+{% endblock %}
+
 {% block content %}
     <h1>List of vCenter Servers</h1>
 
-    <table class="table">
+    <table class="table vcenter-table">
         <thead>
             <tr>
                 <th>VCenter Name</th>
