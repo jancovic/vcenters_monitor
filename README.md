@@ -7,7 +7,7 @@ Also you can get usefull inventory info about all connected Hosts : ESX build ve
 
 
 ## Author
-Andrej Jancovic 
+Andrej Jancovic  2024
 
 ## License
 
