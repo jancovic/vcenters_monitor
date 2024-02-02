@@ -12,7 +12,7 @@ app.debug = True
 app.static_folder = 'static'
 
 
-test = "hello"
+
 
 # Class definitions with parent references
 class Vcenters:
@@ -107,7 +107,6 @@ def print_topology(content, vcenter_name):
                         serial_number = hardware_info.serialNumber
 
                         host_cpu = host.hardware.cpuInfo.numCpuCores
-                        # host_total_memory = round(host.hardware.memorySize / (1024 ** 3))
                         host_summary = host.summary
                         host_total_memory = round(host_summary.hardware.memorySize / (1024 ** 3))
                         host_memory_usage = round (host.summary.quickStats.overallMemoryUsage / 1024)
@@ -199,14 +198,6 @@ def index():
     return render_template('index.html', vcenters_dict=vcenters_dict)
 
 
-# @app.route('/hosts')
-# def hosts():
-#     all_hosts = []
-#     for vcenter_name, vcenter_obj in vcenters_dict.items():
-#         for _, host_obj in vcenter_obj.hosts.items():
-#             all_hosts.append((vcenter_name, host_obj))
-#     return render_template('hosts.html', hosts=all_hosts)
-
 @app.route('/hosts')
 def hosts():
     all_hosts = []
@@ -237,8 +228,6 @@ def host_detail(vcenter_name, host_id):
             host_obj = vcenter_obj.hosts[host_id]
             return render_template('host_detail.html', host_obj=host_obj)
     return "Host not found", 404
-
-
 
 
 
