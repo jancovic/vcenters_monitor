@@ -1,0 +1,13 @@
+##Vcenter1
+- vcenter_name: <FQDN>
+  ip: <IP>
+  login: <user login to Vcenter>
+  pass: <password>
+
+##Vcenter2
+- vcenter_name: <FQDN>
+  ip: <IP>
+  login: <user login to Vcenter>
+  pass: <password>
+
+##...
