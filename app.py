@@ -7,7 +7,7 @@ from pyVmomi import vim
 from datetime import datetime
 
 app = Flask(__name__)
-# app.debug = True
+app.debug = True
 
 app.static_folder = 'static'
 
@@ -199,35 +199,25 @@ def index():
     return render_template('index.html', vcenters_dict=vcenters_dict)
 
 
-
-
+# @app.route('/hosts')
+# def hosts():
+#     all_hosts = []
+#     for vcenter_name, vcenter_obj in vcenters_dict.items():
+#         for _, host_obj in vcenter_obj.hosts.items():
+#             all_hosts.append((vcenter_name, host_obj))
+#     return render_template('hosts.html', hosts=all_hosts)
 
 @app.route('/hosts')
 def hosts():
-    # Default sort field is 'host_total_memory' and default sort direction is ascending
-    direction = request.args.get('direction', 'asc')
-
     all_hosts = []
+    # Iterate through each vCenter and its hosts
     for vcenter_name, vcenter_obj in vcenters_dict.items():
         for host_id, host_obj in vcenter_obj.hosts.items():
+            # You can add more host details here if needed
             all_hosts.append((vcenter_name, host_obj))
 
-    # Custom function to get memory value for sorting
-    def get_memory(host_tuple):
-        host_obj = host_tuple[1]
-        memory_value = getattr(host_obj, 'host_total_memory', 0)
-        try:
-            return int(memory_value)
-        except ValueError:
-            return 0
-
-    # Sort the list based on memory, considering the direction
-    all_hosts.sort(key=get_memory, reverse=direction == 'desc')
-
+    # Render the hosts information in a template
     return render_template('hosts.html', hosts=all_hosts)
-
-
-
 
 
 
@@ -253,5 +243,5 @@ def host_detail(vcenter_name, host_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
 
