@@ -19,3 +19,14 @@
     padding-left: 0; /* Adjust or remove padding to ensure content aligns to the left */
     margin-left: 0; /* Adjust if there's an unnecessary margin affecting alignment */
 }
+
+
+
+
+.checkbox-label {
+    margin-right: 20px; /* Adjust the space between checkboxes as needed */
+    display: inline-block; /* Ensures margin/padding is applied correctly */
+}
+.checkbox-label input[type="checkbox"] {
+    margin-right: 5px; /* Adjust the space between the checkbox and its label text */
+}

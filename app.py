@@ -199,18 +199,28 @@ def index():
     return render_template('index.html', vcenters_dict=vcenters_dict)
 
 
+
 @app.route('/hosts')
 def hosts():
+    # Define a list of all possible attribute keys
+    default_attributes = ['host_name', 'host_server_model', 'esx_version', 'host_cpu', 'host_total_memory', 'serial_number', 'host_bios_version']
+    
+    # Check if any attributes have been selected by the user; if not, use all default attributes
+    # selected_attributes = request.args.getlist('attributes') or default_attributes
+    selected_attributes = request.args.getlist('attributes')
+
+    if 'submitted' in request.args and not selected_attributes:
+        selected_attributes = []
+    elif not selected_attributes:  # No form submission detected, display all by default
+        selected_attributes = default_attributes
+
     all_hosts = []
-    # Iterate through each vCenter and its hosts
     for vcenter_name, vcenter_obj in vcenters_dict.items():
         for host_id, host_obj in vcenter_obj.hosts.items():
-            # You can add more host details here if needed
             all_hosts.append((vcenter_name, host_obj))
 
-    # Render the hosts information in a template
-    return render_template('hosts.html', hosts=all_hosts)
-
+    # Render the hosts template, passing both the hosts and the selected (or default) attributes
+    return render_template('hosts.html', hosts=all_hosts, selected_attributes=selected_attributes)
 
 
 
