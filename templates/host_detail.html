@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-    <h3>Host Details: {{ host_obj.host_name }}</h3>
+<!-- <div class="container"> -->
+<div class="container host-detail-container"> <!-- Apply custom class for alignment -->
+     
+    <h3 style="margin-bottom: 30px;">Host Details: {{ host_obj.host_name }}</h3>
     <ul class="list-unstyled">
-        <li><strong>ID:</strong> {{ host_obj.host_id }}</li>
+        <!-- <li><strong>ID:</strong> {{ host_obj.host_id }}</li> -->
         <li><strong>Hostname:</strong> {{ host_obj.host_name }}</li>
         <li><strong>Cluster:</strong> {{ host_obj.parent_cluster.cluster_name }}</li>
         <li><strong>IP:</strong> {{ host_obj.host_ip }}</li>
@@ -20,7 +22,7 @@
         <li><strong>ESXi Build:</strong> {{ host_obj.esx_build }}</li>
         <li><strong>ESX Host BIOS Version:</strong> {{ host_obj.host_bios_version }}</li>
     </ul>
-    <a href="/">Back to Vcenters</a>
+    <a href="/">Back to Dashboard</a>
 </div>
 <!-- Your content here -->
 {% endblock %}

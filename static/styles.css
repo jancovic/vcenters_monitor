@@ -7,3 +7,15 @@
     margin-top: 20px; /* Adjust the value to control the margin */
     padding: 20px; /* Add padding to create space inside the container if needed */
 }
+
+
+.host-detail-container ul, 
+.host-detail-container ul li {
+    text-align: left; /* Ensure text is aligned to the left */
+    padding-left: 0; /* Remove padding to ensure list items align to the left edge */
+}
+
+.host-detail-container {
+    padding-left: 0; /* Adjust or remove padding to ensure content aligns to the left */
+    margin-left: 0; /* Adjust if there's an unnecessary margin affecting alignment */
+}
