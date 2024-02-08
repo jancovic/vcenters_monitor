@@ -38,7 +38,8 @@
         <tbody>
             {% for vcenter in vcenters %}
                 <tr>
-                    <td>{{ vcenter.vcenter_name }}</td>
+                    <!-- <td>{{ vcenter.vcenter_name }}</td> -->
+                    <td><a href="/vcenter/{{ vcenter.vcenter_name }}">{{ vcenter.vcenter_name }}</a></td>
                     <td>{{ vcenter.version_build }}</td>
                 </tr>
             {% endfor %}
