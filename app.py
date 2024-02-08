@@ -7,7 +7,8 @@ from pyVmomi import vim
 from datetime import datetime
 
 app = Flask(__name__)
-app.debug = True
+app.debug = False
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 app.static_folder = 'static'
 
@@ -220,6 +221,10 @@ def vcenters():
     return render_template('vcenters.html', vcenters=all_vcenters)
 
 
+
+
+
+
 @app.route('/host/<vcenter_name>/<host_id>')
 def host_detail(vcenter_name, host_id):
     if vcenter_name in vcenters_dict:
@@ -227,10 +232,20 @@ def host_detail(vcenter_name, host_id):
         if host_id in vcenter_obj.hosts:
             host_obj = vcenter_obj.hosts[host_id]
             return render_template('host_detail.html', host_obj=host_obj)
-    return "Host not found", 404
 
+
+@app.route('/clusters')
+def clusters():
+    all_clusters = []
+    # Iterate through each vCenter and its clusters
+    for vcenter_name, vcenter_obj in vcenters_dict.items():
+        for cluster_id, cluster_obj in vcenter_obj.clusters.items():
+            all_clusters.append((vcenter_name, cluster_obj))
+
+    # Render the clusters information in a template
+    return render_template('clusters.html', clusters=all_clusters)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
 
