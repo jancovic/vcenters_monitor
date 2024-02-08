@@ -231,6 +231,13 @@ def vcenters():
     return render_template('vcenters.html', vcenters=all_vcenters)
 
 
+@app.route('/vcenter/<vcenter_name>')
+def vcenter_topology(vcenter_name):
+    if vcenter_name in vcenters_dict:
+        vcenter_obj = vcenters_dict[vcenter_name]
+        return render_template('vcenter_topology.html', vcenter_obj=vcenter_obj, vcenter_name=vcenter_name)
+    else:
+        return f"VCenter with name {vcenter_name} not found.", 404
 
 
 
@@ -254,6 +261,8 @@ def clusters():
 
     # Render the clusters information in a template
     return render_template('clusters.html', clusters=all_clusters)
+
+
 
 
 if __name__ == "__main__":
