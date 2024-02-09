@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>VCenter : {{ vcenter_name }}</h1>
+
+    <ul>
+        <li>VCenter: {{ vcenter_name }}
+            <ul>
+                {% for dc_id, dc_obj in vcenter_obj.datacenters.items() %}
+                    <li>Datacenter: {{ dc_obj.datacenter_name }}
+                        <ul>
+                            {% for cluster_id, cluster_obj in vcenter_obj.clusters.items() %}
+                                {% if cluster_obj.parent_datacenter.datacenter_id == dc_id %}
+                                    <li>Cluster: {{ cluster_obj.cluster_name }}
+                                        <ul>
+                                            {% for host_id, host_obj in vcenter_obj.hosts.items() %}
+                                                {% if host_obj.parent_cluster.cluster_id == cluster_id %}
+                                                    <li>Host: <a href="/host/{{ vcenter_name }}/{{ host_id }}">{{ host_obj.host_name }}</a></li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>All Clusters</h2>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Cluster Name</th>
+                    <th>Total Memory (GB)</th>
+                    <th>Memory Usage (GB)</th>
+                    <th>Memory Usage (%)</th> 
+                    <th>Free Memory (GB)</th>
+                    <th>vCenter Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vcenter_name, cluster in clusters %}
+                    <tr>
+                        <td>{{ cluster.cluster_name }}</td>
+                        <td>{{ cluster.cluster_total_memory }}</td>
+                        <td>{{ cluster.cluster_memory_usage }}</td>
+                        <td>{{ '%0.2f' | format(cluster.memory_usage_percentage) }}</td>
+                        <td>{{ cluster.cluster_free_memory }}</td>
+                        <td>{{ vcenter_name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

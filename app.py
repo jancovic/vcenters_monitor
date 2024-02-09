@@ -49,6 +49,13 @@ class Clusters:
         self.cluster_memory_usage += host_memory_usage
         self.cluster_free_memory += host_free_memory
 
+    @property
+    def memory_usage_percentage(self):
+        if self.cluster_total_memory > 0:
+            return (self.cluster_memory_usage / self.cluster_total_memory) * 100
+        else:
+            return 0  # Return 0% if the total memory is zero to avoid division by zero        
+
     def __str__(self):
         return f"Cluster ID: {self.cluster_id}, Cluster Name: {self.cluster_name}, Parent Datacenter: {self.parent_datacenter.datacenter_name}, Total Memory: {self.cluster_total_memory} GB, Memory Usage: {self.cluster_memory_usage} GB, Free Memory: {self.cluster_free_memory} GB"
     
@@ -308,6 +315,21 @@ def sites():
     # Render a template, passing the sites_dict
     return render_template('sites.html', sites_dict=sites_dict)
 
+
+@app.route('/<vcenter_name>/cluster/<cluster_name>')
+def cluster_detail(vcenter_name, cluster_name):
+    # Check if the vCenter exists
+    if vcenter_name in vcenters_dict:
+        vcenter_obj = vcenters_dict[vcenter_name]
+        # Iterate over clusters and find the one with the matching name
+        for cluster_id, cluster_obj in vcenter_obj.clusters.items():
+            if cluster_obj.cluster_name == cluster_name:
+                # Render a template with the cluster's details
+                return render_template('cluster_detail.html', cluster=cluster_obj, vcenter_name=vcenter_name)
+        # If no cluster with the given name is found
+        return f"Cluster with name '{cluster_name}' not found in vCenter {vcenter_name}.", 404
+    else:
+        return f"vCenter with name '{vcenter_name}' not found.", 404
 
 
 
