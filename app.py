@@ -166,28 +166,40 @@ for vcenter in vcenters:
         
 
 def search_all(criteria):
-    results = set()
+    results = []
 
     # Convert criteria to lowercase for case-insensitive comparison
     criteria_lower = criteria.lower()
 
     for vc_name, vcenter_obj in vcenters_dict.items():
         if criteria_lower in vc_name.lower():
-            results.add(f"vCenter: {vc_name}")
-
+            # Include 'vcenter_name' in the result for vCenter
+            results.append({
+                "type": "vCenter", 
+                "display": f"vCenter: {vc_name}",
+                "vcenter_name": vc_name  # Add this line
+            })
+        
         for dc_id, dc_obj in vcenter_obj.datacenters.items():
             if criteria_lower in dc_obj.datacenter_name.lower():
-                results.add(f"Datacenter: {dc_obj.datacenter_name}")
-
+                results.append({"type": "Datacenter", "display": f"Datacenter: {dc_obj.datacenter_name}"})
+            
             for cl_id, cl_obj in vcenter_obj.clusters.items():
                 if criteria_lower in cl_obj.cluster_name.lower():
-                    results.add(f"Cluster: {cl_obj.cluster_name}")
-
+                    results.append({"type": "Cluster", "display": f"Cluster: {cl_obj.cluster_name}"})
+                
                 for host_id, host_obj in vcenter_obj.hosts.items():
                     if criteria_lower in host_obj.host_name.lower():
-                        results.add(f"Host: {host_obj.host_name}")
+                        results.append({
+                            "type": "Host",
+                            "display": host_obj.host_name,
+                            "vcenter_name": vc_name,  # This is already correctly set for host results
+                            "host_id": host_id
+                        })
 
-    return list(results)
+    return results
+
+
         
 
 

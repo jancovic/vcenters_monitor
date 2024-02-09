@@ -16,9 +16,20 @@
     {% if search_results %}
         <h2>Search Results:</h2>
         <ul>
+
+
+
             {% for result in search_results %}
-                <li>{{ result }}</li>
+                {% if result.type == "Host" %}
+                    <li><a href="{{ url_for('host_detail', vcenter_name=result.vcenter_name, host_id=result.host_id) }}" style="color: black;">{{ result.display }}</a></li>
+                {% elif result.type == "vCenter" %}
+                    <li><a href="/vcenter/{{ result.vcenter_name }}" style="color: black;">{{ result.display }}</a></li>
+                {% else %}
+                    <li>{{ result.display }}</li>
+                {% endif %}
             {% endfor %}
+
+
         </ul>
     {% else %}
         <!-- Assuming each vCenter is directly associated with a site -->
