@@ -39,8 +39,19 @@ class Clusters:
         self.cluster_name = cluster_name
         self.parent_datacenter = parent_datacenter
 
+      # Initialize new memory attributes
+        self.cluster_total_memory = 0
+        self.cluster_memory_usage = 0
+        self.cluster_free_memory = 0
+
+    def update_memory_stats(self, host_total_memory, host_memory_usage, host_free_memory):
+        self.cluster_total_memory += host_total_memory
+        self.cluster_memory_usage += host_memory_usage
+        self.cluster_free_memory += host_free_memory
+
     def __str__(self):
-        return f"Cluster ID: {self.cluster_id}, Cluster Name: {self.cluster_name}, Parent Datacenter: {self.parent_datacenter.datacenter_name}"
+        return f"Cluster ID: {self.cluster_id}, Cluster Name: {self.cluster_name}, Parent Datacenter: {self.parent_datacenter.datacenter_name}, Total Memory: {self.cluster_total_memory} GB, Memory Usage: {self.cluster_memory_usage} GB, Free Memory: {self.cluster_free_memory} GB"
+    
 
 class Hosts:
     def __init__(self, host_name, host_id, parent_cluster, host_ip, host_server_model, esx_version, esx_build, host_cpu, host_total_memory, serial_number, host_memory_usage, host_free_memory, connection_state, host_power_state, host_bios_version):
@@ -132,6 +143,7 @@ def print_topology(content, vcenter_name, vcenter_site):
 
 
                         host_obj = Hosts(host_name, host_id, cluster_obj, host_ip, host_server_model, esx_version, esx_build, host_cpu, host_total_memory, serial_number, host_memory_usage, host_free_memory, connection_state, host_power_state, host_bios_version)
+                        cluster_obj.update_memory_stats(host_total_memory, host_memory_usage, host_free_memory)
                         vcenter_obj.hosts[host_id] = host_obj
 
     print(f"Datacenters: {vcenter_obj.datacenters}")
