@@ -207,7 +207,7 @@ def index():
 @app.route('/hosts')
 def hosts():
     # Define a list of all possible attribute keys
-    default_attributes = ['host_name', 'host_server_model', 'esx_version', 'host_cpu', 'host_total_memory', 'serial_number', 'host_bios_version']
+    default_attributes = ['host_name', 'host_server_model', 'esx_version', 'host_cpu', 'host_total_memory', 'serial_number', 'host_bios_version', 'host_free_memory']
     
     # Check if any attributes have been selected by the user; if not, use all default attributes
     # selected_attributes = request.args.getlist('attributes') or default_attributes

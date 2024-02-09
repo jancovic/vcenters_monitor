@@ -11,6 +11,8 @@
         <label class="checkbox-label"><input type="checkbox" name="attributes" value="host_total_memory" {% if "host_total_memory" in selected_attributes %}checked{% endif %}> Total Memory (GB)</label>
         <label class="checkbox-label"><input type="checkbox" name="attributes" value="serial_number" {% if "serial_number" in selected_attributes %}checked{% endif %}> Serial Number</label>
         <label class="checkbox-label"><input type="checkbox" name="attributes" value="host_bios_version" {% if "host_bios_version" in selected_attributes %}checked{% endif %}> BIOS version</label>
+        <!-- Add checkbox for Free Memory -->
+        <label class="checkbox-label"><input type="checkbox" name="attributes" value="host_free_memory" {% if "host_free_memory" in selected_attributes %}checked{% endif %}> Free Memory (GB)</label>
       
     </div>
     <input type="hidden" name="submitted" value="true">
@@ -25,6 +27,7 @@
                 {% if "esx_version" in selected_attributes %}<th>ESXi Version</th>{% endif %}
                 {% if "host_cpu" in selected_attributes %}<th>CPU Cores</th>{% endif %}
                 {% if "host_total_memory" in selected_attributes %}<th>Total Memory (GB)</th>{% endif %}
+                {% if "host_free_memory" in selected_attributes %}<th>Free Memory (GB)</th>{% endif %}
                 {% if "serial_number" in selected_attributes %}<th>Serial Number</th>{% endif %}
                 {% if "host_bios_version" in selected_attributes %}<th>BIOS version</th>{% endif %}
             </tr>
@@ -37,8 +40,10 @@
                     {% if "esx_version" in selected_attributes %}<td>{{ host.esx_version }}</td>{% endif %}
                     {% if "host_cpu" in selected_attributes %}<td>{{ host.host_cpu }}</td>{% endif %}
                     {% if "host_total_memory" in selected_attributes %}<td>{{ host.host_total_memory }}</td>{% endif %}
+                    {% if "host_free_memory" in selected_attributes %}<td>{{ host.host_free_memory }}</td>{% endif %}
                     {% if "serial_number" in selected_attributes %}<td>{{ host.serial_number }}</td>{% endif %}
                     {% if "host_bios_version" in selected_attributes %}<td>{{ host.host_bios_version }}</td>{% endif %}
+            </tr>
                 </tr>
             {% endfor %}
         </tbody>
