@@ -4,10 +4,7 @@
     <h1>Vcenter Dashboard</h1>
 
     <div class="content-container">
-
-        <!-- Search Form within Bootstrap Grid System -->
         <div class="row">
-<!--            <div class="col-lg-8 col-md-10">-->
             <div class="col-12 mb-4">
                 <form action="/" method="post" class="form-inline">
                     <input type="text" name="search" class="form-control w-75" placeholder="Search...">
@@ -16,7 +13,6 @@
             </div>
         </div>
     
-    <!-- Display Search Results -->
     {% if search_results %}
         <h2>Search Results:</h2>
         <ul>
@@ -25,36 +21,33 @@
             {% endfor %}
         </ul>
     {% else %}
-        <!-- Display Vcenter, Datacenter, Cluster, and Host lists -->
+        <!-- Assuming each vCenter is directly associated with a site -->
         <ul>
             {% for vcenter_name, vcenter_obj in vcenters_dict.items() %}
-                <li>Vcenter: {{ vcenter_name }}
+                <li>Site: {{ vcenter_obj.vcenter_site }}
                     <ul>
-                        {% for dc_id, dc_obj in vcenter_obj.datacenters.items() %}
-                            <li>Datacenter: {{ dc_obj.datacenter_name }}
-                                <ul>
-                                    {% for cluster_id, cluster_obj in vcenter_obj.clusters.items() %}
-                                        {% if cluster_obj.parent_datacenter.datacenter_id == dc_id %}
-                                            <li>Cluster: {{ cluster_obj.cluster_name }}
-                                                <ul>
-                                                    {% for host_id, host_obj in vcenter_obj.hosts.items() %}
-                                                        {% if host_obj.parent_cluster.cluster_id == cluster_id %}
-                                                            <!-- <li><a href="/host/{{ vcenter_name }}/{{ host_id }}">Host: {{ host_obj.host_name }}</a></li> -->
+                        <li>Vcenter: {{ vcenter_name }}
+                            <ul>
+                                {% for dc_id, dc_obj in vcenter_obj.datacenters.items() %}
+                                    <li>Datacenter: {{ dc_obj.datacenter_name }}
+                                        <ul>
+                                            {% for cluster_id, cluster_obj in vcenter_obj.clusters.items() %}
+                                                <li>Cluster: {{ cluster_obj.cluster_name }}
+                                                    <ul>
+                                                        {% for host_id, host_obj in vcenter_obj.hosts.items() %}
                                                             <li>Host: <a href="/host/{{ vcenter_name }}/{{ host_id }}">{{ host_obj.host_name }}</a></li>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </ul>
-                                            </li>
-                                        {% endif %}
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                        {% endfor %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             {% endfor %}
         </ul>
     {% endif %}
-
-    <!-- Your content here -->
 {% endblock %}

@@ -17,12 +17,13 @@ app.static_folder = 'static'
 
 # Class definitions with parent references
 class Vcenters:
-    def __init__(self, vcenter_name, version_build=None):
+    def __init__(self, vcenter_name, version_build=None, vcenter_site=None):
         self.vcenter_name = vcenter_name
         self.datacenters = {}
         self.clusters = {}
         self.hosts = {}
         self.version_build = version_build
+        self.vcenter_site = vcenter_site
 
 class Datacenters:
     def __init__(self, datacenter_id, datacenter_name):
@@ -65,11 +66,12 @@ class Hosts:
 # Dictionary to store Vcenter objects
 vcenters_dict = {}
 
-def print_topology(content, vcenter_name):
+def print_topology(content, vcenter_name, vcenter_site):
     about_info = content.about
     vcenter_version_build = f"{about_info.version} build-{about_info.build}"
-    vcenter_obj = Vcenters(vcenter_name, version_build=vcenter_version_build)
+    vcenter_obj = Vcenters(vcenter_name, version_build=vcenter_version_build, vcenter_site=vcenter_site)
     vcenters_dict[vcenter_name] = vcenter_obj
+
 
     print(f"Processing vCenter: {vcenter_name}")
 
@@ -148,13 +150,15 @@ for vcenter in vcenters:
     vcenter_server = vcenter['vcenter_name']
     username = vcenter['login']
     password = vcenter['pass']
+    vcenter_site = vcenter['site']
 
     try:
         si = SmartConnect(host=vcenter_server, user=username, pwd=password, sslContext=context)
         atexit.register(Disconnect, si)
 
         content = si.RetrieveContent()
-        print_topology(content, vcenter_server)
+        # print_topology(content, vcenter_server)
+        print_topology(content, vcenter_server, vcenter_site)
     except Exception as e:
         print(f"Failed to connect to {vcenter_server}: {e}")
 
