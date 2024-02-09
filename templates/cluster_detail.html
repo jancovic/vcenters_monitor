@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container host-detail-container"> <!-- Use a custom class for styling consistency -->
-
+<div class="container host-detail-container">
     <h3 style="margin-bottom: 30px;">Cluster Details: {{ cluster.cluster_name }}</h3>
     <ul class="list-unstyled">
         <li><strong>vCenter Name:</strong> {{ vcenter_name }}</li>
@@ -11,8 +10,16 @@
         <li><strong>Memory Usage (GB):</strong> {{ cluster.cluster_memory_usage }}</li>
         <li><strong>Free Memory (GB):</strong> {{ cluster.cluster_free_memory }}</li>
         <li><strong>Memory Usage (%):</strong> {{ '%0.2f' | format(cluster.memory_usage_percentage) }}</li>
-        <!-- Include any other cluster attributes here -->
+        <!-- Additional cluster attributes -->
     </ul>
+    {% if cluster.hosts_names %}
+    <h4>Related Hosts</h4>
+    <ul class="list-unstyled">
+        {% for host_name in cluster.hosts_names %}
+        <li>{{ host_name }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <a href="/{{ vcenter_name }}">Back to vCenter Overview</a> | <a href="/">Back to Dashboard</a>
 </div>
 {% endblock %}
