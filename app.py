@@ -266,6 +266,24 @@ def clusters():
     # Render the clusters information in a template
     return render_template('clusters.html', clusters=all_clusters)
 
+@app.route('/sites')
+def sites():
+    # Initialize an empty dictionary to hold sites and their associated vCenters
+    sites_dict = {}
+
+    # Iterate through the vcenters_dict to populate sites_dict
+    for vcenter_name, vcenter_obj in vcenters_dict.items():
+        site = vcenter_obj.vcenter_site
+        if site in sites_dict:
+            # Append the vCenter to the list of vCenters for this site
+            sites_dict[site].append(vcenter_name)
+        else:
+            # Create a new entry in the dictionary for this site
+            sites_dict[site] = [vcenter_name]
+
+    # Render a template, passing the sites_dict
+    return render_template('sites.html', sites_dict=sites_dict)
+
 
 
 
