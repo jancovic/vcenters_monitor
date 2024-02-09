@@ -192,7 +192,7 @@ def search_all(criteria):
                     if criteria_lower in host_obj.host_name.lower():
                         results.append({
                             "type": "Host",
-                            "display": host_obj.host_name,
+                            "display": f"host: {host_obj.host_name}",
                             "vcenter_name": vc_name,  # This is already correctly set for host results
                             "host_id": host_id
                         })
