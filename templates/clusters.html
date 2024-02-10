@@ -17,7 +17,7 @@
             <tbody>
                 {% for vcenter_name, cluster in clusters %}
                     <tr>
-                        <td>{{ cluster.cluster_name }}</td>
+                        <td><a href="{{ url_for('cluster_detail', vcenter_name=vcenter_name, cluster_name=cluster.cluster_name) }}">{{ cluster.cluster_name }}</a></td>
                         <td>{{ cluster.cluster_total_memory }}</td>
                         <td>{{ cluster.cluster_memory_usage }}</td>
                         <td>{{ '%0.2f' | format(cluster.memory_usage_percentage) }}</td>
