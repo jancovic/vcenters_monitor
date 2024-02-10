@@ -9,7 +9,7 @@
                     <th>Cluster Name</th>
                     <th>Total Memory (GB)</th>
                     <th>Memory Usage (GB)</th>
-                    <th>Memory Usage (%)</th> 
+                    <th>Memory Usage (%)</th>
                     <th>Free Memory (GB)</th>
                     <th>vCenter Name</th>
                 </tr>
@@ -20,7 +20,11 @@
                         <td><a href="{{ url_for('cluster_detail', vcenter_name=vcenter_name, cluster_name=cluster.cluster_name) }}">{{ cluster.cluster_name }}</a></td>
                         <td>{{ cluster.cluster_total_memory }}</td>
                         <td>{{ cluster.cluster_memory_usage }}</td>
-                        <td>{{ '%0.2f' | format(cluster.memory_usage_percentage) }}</td>
+                        <td>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar {{ 'bg-success' if cluster.memory_usage_percentage < 50 else 'bg-warning' if cluster.memory_usage_percentage < 75 else 'bg-danger' }}" role="progressbar" style="width: {{ cluster.memory_usage_percentage }}%;" aria-valuenow="{{ cluster.memory_usage_percentage }}" aria-valuemin="0" aria-valuemax="100">{{ '%0.2f' | format(cluster.memory_usage_percentage) }}%</div>
+                            </div>
+                        </td>
                         <td>{{ cluster.cluster_free_memory }}</td>
                         <td>{{ vcenter_name }}</td>
                     </tr>
@@ -28,4 +32,27 @@
             </tbody>
         </table>
     </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function updateProgressBars() {
+    document.querySelectorAll('.progress-bar').forEach(function(bar) {
+        const usage = parseFloat(bar.getAttribute('aria-valuenow'));
+        bar.style.width = usage + '%';
+        if (usage < 50) {
+            bar.classList.add('bg-success');
+        } else if (usage >= 50 && usage < 75) {
+            bar.classList.add('bg-warning');
+        } else {
+            bar.classList.add('bg-danger');
+        }
+    });
+}
+
+// Call the function to update progress bars on page load
+document.addEventListener('DOMContentLoaded', function() {
+    updateProgressBars();
+});
+</script>
 {% endblock %}
