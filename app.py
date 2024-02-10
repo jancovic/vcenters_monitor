@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 import ssl
 import atexit
 import yaml
 from pyVim.connect import SmartConnect, Disconnect
 from pyVmomi import vim
 from datetime import datetime
+import csv
+from io import StringIO
 
 app = Flask(__name__)
 app.debug = False
@@ -244,27 +246,53 @@ def index():
 
 
 
-@app.route('/hosts')
+@app.route('/hosts', methods=['GET'])
 def hosts():
     # Define a list of all possible attribute keys
     default_attributes = ['host_name', 'host_server_model', 'esx_version', 'host_cpu', 'host_total_memory', 'serial_number', 'host_bios_version', 'host_free_memory']
     
     # Check if any attributes have been selected by the user; if not, use all default attributes
-    # selected_attributes = request.args.getlist('attributes') or default_attributes
-    selected_attributes = request.args.getlist('attributes')
+    selected_attributes = request.args.getlist('attributes') or default_attributes
 
     if 'submitted' in request.args and not selected_attributes:
         selected_attributes = []
     elif not selected_attributes:  # No form submission detected, display all by default
         selected_attributes = default_attributes
 
+    # Check if the request is to export the hosts data
+    if 'export' in request.args:
+        si = StringIO()
+        cw = csv.writer(si)
+        # Write the header row based on selected attributes
+        cw.writerow(selected_attributes)
+
+        for vcenter_name, vcenter_obj in vcenters_dict.items():
+            for host_id, host_obj in vcenter_obj.hosts.items():
+                row = []
+                for attr in selected_attributes:
+                    value = getattr(host_obj, attr, '')  # Default to empty string if attribute not found
+                    row.append(value)
+                cw.writerow(row)
+
+        output = si.getvalue()
+        si.close()
+
+        # Set up the response to download the file
+        response = Response(output, mimetype='text/csv')
+        response.headers['Content-Disposition'] = 'attachment; filename="hosts.csv"'
+        return response
+
+    # If not exporting, proceed to render the template
     all_hosts = []
+    # Gather all hosts based on your data structure
+    # This is a placeholder loop, adapt it to your actual data retrieval logic
     for vcenter_name, vcenter_obj in vcenters_dict.items():
         for host_id, host_obj in vcenter_obj.hosts.items():
             all_hosts.append((vcenter_name, host_obj))
 
     # Render the hosts template, passing both the hosts and the selected (or default) attributes
     return render_template('hosts.html', hosts=all_hosts, selected_attributes=selected_attributes)
+
 
 
 

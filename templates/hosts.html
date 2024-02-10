@@ -4,6 +4,7 @@
 <h2>All Hosts</h2>
 <form action="{{ url_for('hosts') }}" method="get" class="form-inline mb-3">
     <div class="form-group">
+        <!-- Checkbox for each attribute with checks for selected attributes to persist selections -->
         <label class="checkbox-label"><input type="checkbox" name="attributes" value="host_name" {% if "host_name" in selected_attributes %}checked{% endif %}> Host Name</label>
         <label class="checkbox-label"><input type="checkbox" name="attributes" value="host_server_model" {% if "host_server_model" in selected_attributes %}checked{% endif %}> Server Model</label>
         <label class="checkbox-label"><input type="checkbox" name="attributes" value="esx_version" {% if "esx_version" in selected_attributes %}checked{% endif %}> ESXi Version</label>
@@ -11,39 +12,32 @@
         <label class="checkbox-label"><input type="checkbox" name="attributes" value="host_total_memory" {% if "host_total_memory" in selected_attributes %}checked{% endif %}> Total Memory (GB)</label>
         <label class="checkbox-label"><input type="checkbox" name="attributes" value="serial_number" {% if "serial_number" in selected_attributes %}checked{% endif %}> Serial Number</label>
         <label class="checkbox-label"><input type="checkbox" name="attributes" value="host_bios_version" {% if "host_bios_version" in selected_attributes %}checked{% endif %}> BIOS version</label>
-        <!-- Add checkbox for Free Memory -->
         <label class="checkbox-label"><input type="checkbox" name="attributes" value="host_free_memory" {% if "host_free_memory" in selected_attributes %}checked{% endif %}> Free Memory (GB)</label>
-      
     </div>
+    <!-- Hidden input to indicate form submission -->
     <input type="hidden" name="submitted" value="true">
+    <!-- Buttons for updating the view and exporting data -->
     <button type="submit" class="btn btn-primary ml-2">Update View</button>
+    <button type="submit" name="export" value="true" class="btn btn-secondary ml-2">Export to CSV</button>
 </form>
+
 <div class="table-responsive">
     <table class="table table-hover">
         <thead>
             <tr>
-                {% if "host_name" in selected_attributes %}<th>Host Name</th>{% endif %}
-                {% if "host_server_model" in selected_attributes %}<th>Server Model</th>{% endif %}
-                {% if "esx_version" in selected_attributes %}<th>ESXi Version</th>{% endif %}
-                {% if "host_cpu" in selected_attributes %}<th>CPU Cores</th>{% endif %}
-                {% if "host_total_memory" in selected_attributes %}<th>Total Memory (GB)</th>{% endif %}
-                {% if "host_free_memory" in selected_attributes %}<th>Free Memory (GB)</th>{% endif %}
-                {% if "serial_number" in selected_attributes %}<th>Serial Number</th>{% endif %}
-                {% if "host_bios_version" in selected_attributes %}<th>BIOS version</th>{% endif %}
+                <!-- Table headers based on selected attributes -->
+                {% for attr in selected_attributes %}
+                    <th>{{ attr.replace('_', ' ').title() }}</th>
+                {% endfor %}
             </tr>
         </thead>
         <tbody>
+            <!-- Iterating through hosts and displaying their attributes -->
             {% for vcenter_name, host in hosts %}
                 <tr>
-                    <td><a href="{{ url_for('host_detail', vcenter_name=vcenter_name, host_id=host.host_id) }}" style="color: black;">{{ host.host_name }}</a></td>                    
-                    {% if "host_server_model" in selected_attributes %}<td>{{ host.host_server_model }}</td>{% endif %}
-                    {% if "esx_version" in selected_attributes %}<td>{{ host.esx_version }}</td>{% endif %}
-                    {% if "host_cpu" in selected_attributes %}<td>{{ host.host_cpu }}</td>{% endif %}
-                    {% if "host_total_memory" in selected_attributes %}<td>{{ host.host_total_memory }}</td>{% endif %}
-                    {% if "host_free_memory" in selected_attributes %}<td>{{ host.host_free_memory }}</td>{% endif %}
-                    {% if "serial_number" in selected_attributes %}<td>{{ host.serial_number }}</td>{% endif %}
-                    {% if "host_bios_version" in selected_attributes %}<td>{{ host.host_bios_version }}</td>{% endif %}
-            </tr>
+                    {% for attr in selected_attributes %}
+                        <td>{{ host[attr] }}</td> <!-- Make sure your host object allows this kind of attribute access -->
+                    {% endfor %}
                 </tr>
             {% endfor %}
         </tbody>
