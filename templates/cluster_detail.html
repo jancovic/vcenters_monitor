@@ -12,11 +12,12 @@
         <li><strong>Memory Usage (%):</strong> {{ '%0.2f' | format(cluster.memory_usage_percentage) }}</li>
         <!-- Additional cluster attributes -->
     </ul>
-    {% if cluster.hosts_names %}
+    {% if cluster.hosts %}
     <h4>Related Hosts</h4>
     <ul class="list-unstyled">
-        {% for host_name in cluster.hosts_names %}
-        <li>{{ host_name }}</li>
+        {% for host in cluster.hosts %}
+        <li><a href="{{ url_for('host_detail', vcenter_name=vcenter_name, host_id=host.host_id) }}" style="color: black;">{{ host.host_name }}</a></li>
+
         {% endfor %}
     </ul>
     {% endif %}
