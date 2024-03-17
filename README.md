@@ -32,13 +32,13 @@ Andrej Jancovic  (2024)
 - vcenter_name: <Vcenter FQDN>
   ip: <Vcenter IP>
   login: <Vceneter User Login>
-  pass: <Vcenter passord>
+  pass: <Vcenter password>
   site: <Vcenetr enviroment tag : Prod, Dev..>
 
 - vcenter_name: <Vcenter FQDN>
   ip: <Vcenter IP>
   login: <Vceneter User Login>
-  pass: <Vcenter passord>
+  pass: <Vcenter password>
   site: <Vcenetr enviroment tag : Prod, Dev..>
 ```
 
