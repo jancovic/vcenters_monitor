@@ -56,11 +56,11 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 ## Example Screenshot
 
 
-<img src="flask_main.PNG" width="500" alt="Screenshot">
+<img src="flask_main.PNG" width="1000" alt="Screenshot">
 
 
 <br><br>
 
 ## Example Screenshot
 
-<img src="flask_clusters.PNG" width="500" alt="Screenshot">
+<img src="flask_clusters.PNG" width="1000" alt="Screenshot">
