@@ -1,0 +1,17 @@
+# vcenter one
+- vcenter_name: <Vcenter FQDN>
+  ip: <Vcenter IP>
+  login: <<Vcenter  User Login>
+  pass: <Vcenter password>
+  site: <<Vcenter enviroment tag : Prod, Dev..>
+
+
+# vcenter two
+- vcenter_name: <Vcenter FQDN>
+  ip: <Vcenter IP>
+  login: <<Vcenter  User Login>
+  pass: <Vcenter password>
+  site: <<Vcenter enviroment tag : Prod, Dev..>
+
+#...
+
