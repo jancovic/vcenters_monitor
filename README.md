@@ -68,3 +68,8 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 
 ### Hosts
 <img src="flask_hosts.PNG" width="1000" alt="Screenshot">
+
+<br>
+
+### Host details
+<img src="flask_host_specs.PNG" width="1000" alt="Screenshot">
