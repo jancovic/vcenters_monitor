@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Sites Overview</h1>
+
+    <div class="content-container">
+        {% for site, vcenters in sites_dict.items() %}
+            <div class="site">
+                <h3>Site: {{ site }}</h3>
+                <ul>
+                    {% for vcenter in vcenters %}
+                        <!-- <li>{{ vcenter }}</li> -->
+                        <li><a href="/vcenter/{{ vcenter }}">{{ vcenter }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
