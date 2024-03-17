@@ -58,20 +58,20 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 ## Example Screenshots
 ### Main Dashboard
 
-<img src="flask_main.PNG" width="1000" alt="Screenshot">
+<img src="pics/flask_main.PNG" width="1000" alt="Screenshot">
 
 <br>
 
 ### Clusters
 
-<img src="flask_clusters.PNG" width="1000" alt="Screenshot">
+<img src="pics/flask_clusters.PNG" width="1000" alt="Screenshot">
 
 <br>
 
 ### Hosts
-<img src="flask_hosts.PNG" width="1000" alt="Screenshot">
+<img src="pics/flask_hosts.PNG" width="1000" alt="Screenshot">
 
 <br>
 
 ### Host details
-<img src="flask_host_specs.PNG" width="1000" alt="Screenshot">
+<img src="pics/flask_host_specs.PNG" width="1000" alt="Screenshot">
